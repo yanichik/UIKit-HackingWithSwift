@@ -9,7 +9,7 @@ import UIKit
 
 // When you see a data type that starts with “UI”, it means it comes from UIKit.
 // UIViewController is Apple’s default screen type, which is empty and white until we change it.
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
     // will be created when the ViewController screen is created, and exist for as long as the screen exists. It will be empty, because we haven’t actually filled it with anything, but at least it’s there ready for us to fill.
     var pictures = [String]()
 
@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         }
         print(pictures)
     }
-
 
 }
 
