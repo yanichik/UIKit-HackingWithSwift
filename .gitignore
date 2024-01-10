@@ -21,4 +21,4 @@ xcuserdata/
 xcuserdata/
 
 # Ignore .xcbkptlist file
-.xcbkptlist
+*.xcbkptlist
