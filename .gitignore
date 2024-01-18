@@ -22,3 +22,6 @@ xcuserdata/
 
 # Ignore .xcbkptlist file
 *.xcbkptlist
+
+# Ignore all resources file
+HackingWithSwift-main*
