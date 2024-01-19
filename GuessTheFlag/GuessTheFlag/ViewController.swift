@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         correctAnswer = Int.random(in: 0...2)
         
         // uppercased() capitalized UK & US properly
-        title = countries[correctAnswer].uppercased()
+        title = "\(countries[correctAnswer].uppercased()), Score: \(score)"
         // localizedCapitalized capitalized Uk & Us improperly
 //        title = countries[correctAnswer].localizedCapitalized
     }
