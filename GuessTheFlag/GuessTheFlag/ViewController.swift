@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
-        countries.shuffle()
         askQuestion(action: nil)
     }
     
@@ -41,6 +40,7 @@ class ViewController: UIViewController {
     }
     
     func askQuestion(action: UIAlertAction!) {
+        countries.shuffle()
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
