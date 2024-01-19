@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     var countries = [String]()
     var score = 0
+    var correctAnswer = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
+        countries.shuffle()
         askQuestion()
     }
     
@@ -42,6 +44,14 @@ class ViewController: UIViewController {
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
+        correctAnswer = Int.random(in: 0...2)
+        
+        // uppercased() capitalized UK & US properly
+        title = countries[correctAnswer].uppercased()
+        // localizedCapitalized capitalized Uk & Us improperly
+//        title = countries[correctAnswer].localizedCapitalized
+    }
+    @IBAction func buttonTapped(_ sender: UIButton) {
     }
     
     
