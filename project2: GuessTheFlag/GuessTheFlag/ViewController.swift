@@ -32,6 +32,12 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
+        // show score in title when tapping - action viewed as a share button
+        // navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showScoreTapped))
+        
+        // show score in title when tapping - viewed as text
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Score", style: .plain, target: self, action: #selector(showScoreTapped))
+        
         askQuestion(action: nil)
     }
     
@@ -49,7 +55,10 @@ class ViewController: UIViewController {
         correctAnswer = Int.random(in: 0...2)
         
         // uppercased() capitalized UK & US properly
-        title = "\(countries[correctAnswer].uppercased()), Score: \(score)"
+        // title with score
+        // title = "\(countries[correctAnswer].uppercased()), Score: \(score)"
+        // title without score
+        title = "\(countries[correctAnswer].uppercased())"
         // localizedCapitalized capitalized Uk & Us improperly
 //        title = countries[correctAnswer].localizedCapitalized
     }
@@ -62,7 +71,11 @@ class ViewController: UIViewController {
             score -= 1
         }
         if questionsAsked < 10 {
-            let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+            // no message
+//            let ac = UIAlertController(title: title, message: "", preferredStyle: .alert)
+            
+            // show score in title
+             let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
             present(ac, animated: true)
         } else {
@@ -72,6 +85,11 @@ class ViewController: UIViewController {
             ac.addAction(UIAlertAction(title: "Start New Game", style: .default, handler: askQuestion))
             present(ac, animated: true)
         }
+    }
+    
+    @objc func showScoreTapped(){
+        print("show score tapped")
+        title = "\(countries[correctAnswer].uppercased()), Score: \(score)"
     }
     
     
