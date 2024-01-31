@@ -16,6 +16,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareAppTapped))
         title = "Storm Viewer"
         // shared file manager object. data type that lets us work with the filesystem, and in our case we'll be using it to look for files.
         let fm = FileManager.default
@@ -47,6 +48,15 @@ class ViewController: UITableViewController {
             detailedVC.selectedImage = pictures[indexPath.row]
             navigationController?.pushViewController(detailedVC, animated: true)
         }
+    }
+    
+    @objc func shareAppTapped(){
+        print("share app tapped")
+        let appURL = URL(string: "https://www.stormviewer.com")
+        // create vc, present vc
+        let vc = UIActivityViewController(activityItems: ["I highly recommend this Storm Viewer App!", appURL], applicationActivities: nil)
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 
