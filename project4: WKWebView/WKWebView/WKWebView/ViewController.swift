@@ -83,6 +83,9 @@ class ViewController: UIViewController, WKNavigationDelegate {
                 }
             }
         }
+        let alertController = UIAlertController(title: "Access Blocked!", message: "Website you are trying to access is blocked. Please request access.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Go back.", style: .cancel))
+        present(alertController, animated: true)
         print("not allowed")
         decisionHandler(.cancel)
     }
