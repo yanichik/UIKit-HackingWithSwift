@@ -14,7 +14,8 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        navigationItem.leftBarButtonItem = self.editButtonItem
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Start", style: .plain, target: self, action: #selector(startGame))
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt"){
             if let startWords = try? String(contentsOf: startWordsURL){
                 allWords = startWords.components(separatedBy: "\n")
@@ -23,7 +24,7 @@ class ViewController: UITableViewController {
         if allWords.isEmpty {
             allWords = ["silkworm"]
         }
-        startGame()
+//        startGame()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,9 +37,14 @@ class ViewController: UITableViewController {
         return cell
     }
 
-    func startGame(){
+    @objc func startGame(){
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
+        // Option1: Hide left button after starting game
+        // navigationItem.leftBarButtonItem?.isHidden = true
+        
+        // Option2: Change display of left button to type .refresh
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
         tableView.reloadData()
     }
     
@@ -73,14 +79,18 @@ class ViewController: UITableViewController {
                     errorMsg = "This answer has previously been submitted. Try another response."
                 }
             } else {
-                errorTitle = "Not A Word!"
-                errorMsg = "This answer is not in the English Dictionary. Try again."
+                errorTitle = "Not Acceptable Word!"
+                errorMsg = "Either not in English Dictionary or shorter than 3 letters. Try again."
             }
         } else {
             guard let title = title else { return }
             errorTitle = "Not Possible!"
             errorMsg = "This word is not possible to spell from \(title)"
         }
+        showErrorMessage(errorTitle: errorTitle, errorMsg: errorMsg)
+    }
+    
+    func showErrorMessage(errorTitle: String, errorMsg: String) {
         let alertController = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok.", style: .default))
         present(alertController, animated: true)
@@ -106,6 +116,12 @@ class ViewController: UITableViewController {
     
     // if actual English word
     func isReal(_ word: String) -> Bool {
+        if word.utf16.count < 3 {
+            return false
+        }
+        if word.lowercased() == title?.lowercased() {
+            return false
+        }
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.count)
         let mispelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
